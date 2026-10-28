@@ -1,0 +1,24 @@
+services:
+  erp-restore-portal:
+    build:
+      context: .
+    container_name: erp-restore-portal
+    ports:
+      - "5001:5000"
+    environment:
+      - ERP_SITE_NAME=frontend
+      - ERP_CONTAINER_NAME=frappe_docker-backend-1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - frappe_docker_sites:/sites
+    networks:
+      - frappe_docker_frappe_network
+    restart: unless-stopped
+
+networks:
+  frappe_docker_frappe_network:
+    external: true
+
+volumes:
+  frappe_docker_sites:
+    external: true
